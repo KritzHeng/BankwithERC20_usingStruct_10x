@@ -30,12 +30,23 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    rinkeby: {
+      url: process.env.RINKEBY_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    mumbai: {
+      url: process.env.MUMBAI_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY_MUMBAI !== undefined ? [process.env.PRIVATE_KEY_MUMBAI] : [],
+    }
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
   },
   etherscan: {
+    // apiKey: process.env.POLYGONSCAN_API_KEY,
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
 };
