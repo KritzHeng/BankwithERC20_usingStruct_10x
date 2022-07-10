@@ -38,14 +38,23 @@ contract BankAccount_Struct is Ownable {
         whitelistedTokens[symbol] = tokenAddress;
     }
 
-    function depositToken(uint256 amount, uint _x, bytes32 symbol) external {
+    function depositTokens(uint256 amount, uint _x, bytes32 symbol) external {
+        require(amount > 0);
         myAccounts[msg.sender].items[_x].itemValue += amount;
         ERC20(whitelistedTokens[symbol]).transferFrom(msg.sender, address(this), amount);
     }
 
-    function withdrawToken(uint256 amount, uint _x, bytes32 symbol) external {
+    function withdrawTokens(uint256 amount, uint _x, bytes32 symbol) external {
+        require(myAccounts[msg.sender].items[_x].itemValue >= amount);
         myAccounts[msg.sender].items[_x].itemValue -= amount;
         ERC20(whitelistedTokens[symbol]).transfer(msg.sender, amount);
+    }
+    function transferToken(uint256 amount, uint _from, uint _to) external {
+        require(myAccounts[msg.sender].items[_from].itemValue >= amount);
+        require(_from != _to);
+        myAccounts[msg.sender].items[_from].itemValue -= amount;
+        myAccounts[msg.sender].items[_to].itemValue += amount;
+        // ERC20(whitelistedTokens[symbol]).transfer(msg.sender, amount);
     }
 
 

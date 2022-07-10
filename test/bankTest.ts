@@ -96,8 +96,6 @@ describe("BankAccount", function () {
   describe('depositTokens', function () {
     it('should deposit dai', async function () {
         
-      
-      
       await bank.connect(wallet1).depositTokens(
           100,
           1,
@@ -128,13 +126,13 @@ describe("BankAccount", function () {
         600,
         1,
         DAI,
-      );
-      await bank.connect(wallet1).withdrawTokens(
-        100,
-        1,
-        DAI,
-      );
-
+        );
+        await bank.connect(wallet1).withdrawTokens(
+          100,
+          1,
+          DAI,
+          );
+          
       expect(await token.balanceOf(wallet1.address)).to.equal(3500);
     //   expect(
     //     await bank.accountBalances(wallet1.address, DAI)
