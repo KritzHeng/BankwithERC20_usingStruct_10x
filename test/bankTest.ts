@@ -66,6 +66,7 @@ describe("BankAccount", function () {
     );
 
     await bank.connect(wallet1).addAccount("Jonh");
+    await bank.connect(wallet1).addAccount("wick");
     // await bank.addAccount("Jonh");
     await bank.connect(wallet2).addAccount("Jazz");
 
@@ -81,7 +82,7 @@ describe("BankAccount", function () {
         expect(await token.balanceOf(wallet1.address)).to.equal(4000);
     })
     
-    it('should transfer tokens to wallet 2', async function () {
+    it('should mint tokens to wallet 2', async function () {
         // console.log(await token.balanceOf(wallet2.address))
       expect(await token.balanceOf(wallet2.address)).to.equal(1000);
     })
@@ -134,19 +135,49 @@ describe("BankAccount", function () {
           );
           
       expect(await token.balanceOf(wallet1.address)).to.equal(3500);
-    //   expect(
-    //     await bank.accountBalances(wallet1.address, DAI)
-    //   ).to.equal(500);
+
     })
-
-    // it('should not allow withdrawing more than has been deposited', async function () {
-    //   await expect(
-    //     bank.connect(wallet1).withdrawTokens(10000, DAI)
-    //   ).to.be.revertedWith("Insufficent funds")
-    // })
+    // transferToken(uint256 amount, uint _from, uint _to)
 
 
+  //   function getValue(address _addr, uint _x)public view returns(uint){
+  //     return myAccounts[_addr].items[_x].itemValue;
+  // }
+
+ 
 
 })
+describe('transfer', function () {
+  // deposit to Account Frist
+  it('should transfer dai from the contract', async function () {
+    await bank.connect(wallet1).depositTokens(
+      600,
+      1,
+      DAI,
+      );
+    // console.log(await bank.connect(wallet1).getValue(wallet1.address,1))
+    // console.log(await bank.connect(wallet1).getValue(wallet1.address,2))
+
+    // Transfer to another acount
+    await bank.connect(wallet1).transferToken(
+      200,
+      1,
+      2,
+      );
+      // console.log(await bank.connect(wallet1).getValue(wallet1.address,1))
+      // console.log(await bank.connect(wallet1).getValue(wallet1.address,2))
+
+    expect(await bank.connect(wallet1).getValue(wallet1.address,1)).to.equal(400);
+    expect(await bank.connect(wallet1).getValue(wallet1.address,2)).to.equal(200);
+
+
+  })
+  })
+
+
+
+
+
+
 })
 
